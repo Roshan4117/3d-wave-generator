@@ -41,9 +41,9 @@ A full-stack Flask web application that visualizes **electromagnetic, sound, and
     ├── css/
     │   └── main.css
     └── js/
-        ├── main.js         # Navbar / shared behaviour
-        ├── dynamic.js      # Dynamic page controller
-        └── static.js       # Static page controller
+        ├── main.js         # Navbar 
+        ├── dynamic.js      # Dynamic page 
+        └── static.js       # Static page 
 ```
 
 ---
