@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Wave Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="{{ url_for('index') }}" class="nav-brand">∿ WaveGen</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('index') }}">Home</a></li>
+      <li><a href="{{ url_for('dynamic') }}" class="active">Dynamic</a></li>
+      <li><a href="{{ url_for('static_spectrums') }}">Static</a></li>
+      <li><a href="{{ url_for('index') }}#about">About</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="page-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">SPECTRUM TYPE</div>
+        <div class="spectrum-tabs">
+          <button class="spec-tab active" data-type="electromagnetic">⚡ Electromagnetic</button>
+          <button class="spec-tab"        data-type="sound">🔊 Sound</button>
+          <button class="spec-tab"        data-type="visual">👁 Visual</button>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">PARAMETERS</div>
+        <div class="param-group">
+          <label class="param-label">Frequency <span class="param-val" id="freqVal">2.0</span> Hz</label>
+          <input class="slider" type="range" id="frequency" min="0.1" max="10" step="0.1" value="2.0">
+        </div>
+        <div class="param-group">
+          <label class="param-label">Amplitude <span class="param-val" id="ampVal">1.0</span></label>
+          <input class="slider" type="range" id="amplitude" min="0.1" max="5" step="0.1" value="1.0">
+        </div>
+        <div class="param-group">
+          <label class="param-label">Resolution <span class="param-val" id="resVal">60</span></label>
+          <input class="slider" type="range" id="resolution" min="20" max="120" step="10" value="60">
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <button class="generate-btn" id="generateBtn">Generate Wave</button>
+
+      <div class="sidebar-meta">
+        <div class="meta-row"><span>Formula</span><code id="metaFormula">Z = A·sin(f·(X+Y))</code></div>
+        <div class="meta-row"><span>Render time</span><code id="metaTime">—</code></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="main-header">
+        <div>
+          <h1 class="main-title" id="mainTitle">Electromagnetic Spectrum</h1>
+          <p class="main-sub"  id="mainSub">Z = A · sin(f · (X + Y))</p>
+        </div>
+        <div class="main-nav">
+          <button class="nav-arrow" id="prevSpec" title="Previous">&#9664;</button>
+          <button class="nav-arrow" id="nextSpec" title="Next">&#9654;</button>
+        </div>
+      </div>
+
+      <div class="wave-display">
+        <div class="wave-loader" id="waveLoader">
+          <div class="loader-spinner"></div>
+          <span>Rendering surface…</span>
+        </div>
+        <img id="waveImg" alt="3D wave surface" style="display:none">
+        <div class="wave-error" id="waveError" style="display:none">
+          <span>⚠ Render failed. Is Flask running on port 5000?</span>
+          <button onclick="generateWave()">Retry</button>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-brand">∿ WaveGen</span>
+      <span class="footer-copy">Built with Flask · NumPy · Matplotlib</span>
+      <div class="footer-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('static_spectrums') }}">Static</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/dynamic.js') }}"></script>
+</body>
+</html>

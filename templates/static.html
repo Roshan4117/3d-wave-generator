@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planetary Spectrums — Static</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="{{ url_for('index') }}" class="nav-brand">∿ WaveGen</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('index') }}">Home</a></li>
+      <li><a href="{{ url_for('dynamic') }}">Dynamic</a></li>
+      <li><a href="{{ url_for('static_spectrums') }}" class="active">Static</a></li>
+      <li><a href="{{ url_for('index') }}#about">About</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="static-wrap">
+
+    <div class="static-hero">
+      <div class="section-tag">STATIC MODE</div>
+      <h1>Planetary Wave Spectrums</h1>
+      <p>Each planet has unique wave characteristics based on its electromagnetic environment. Navigate between planets to see how frequency changes across all three spectrum types.</p>
+    </div>
+
+    <div class="planet-strip">
+      <button class="planet-arrow" id="prevPlanet">&#9664;</button>
+      <div class="planet-track" id="planetTrack">
+        <button class="planet-pill" data-planet="Mercury">Mercury</button>
+        <button class="planet-pill" data-planet="Venus">Venus</button>
+        <button class="planet-pill active" data-planet="Earth">Earth</button>
+        <button class="planet-pill" data-planet="Mars">Mars</button>
+        <button class="planet-pill" data-planet="Jupiter">Jupiter</button>
+        <button class="planet-pill" data-planet="Saturn">Saturn</button>
+        <button class="planet-pill" data-planet="Uranus">Uranus</button>
+        <button class="planet-pill" data-planet="Neptune">Neptune</button>
+      </div>
+      <button class="planet-arrow" id="nextPlanet">&#9654;</button>
+    </div>
+
+    <div class="planet-info-bar">
+      <div class="planet-icon" id="planetIcon">🌍</div>
+      <div>
+        <div class="planet-name" id="planetName">Earth</div>
+        <div class="planet-desc" id="planetDesc">Loading wave data…</div>
+      </div>
+      <div class="planet-freq-badges" id="freqBadges"></div>
+    </div>
+
+    <div class="spectrum-grid">
+      <div class="spectrum-panel" id="panel-electromagnetic">
+        <div class="panel-header">
+          <span class="panel-icon">⚡</span>
+          <span class="panel-title">Electromagnetic Spectrum</span>
+          <span class="panel-badge" id="badge-electromagnetic">—</span>
+        </div>
+        <div class="panel-body">
+          <div class="panel-loader" id="loader-electromagnetic"><div class="loader-spinner"></div></div>
+          <img id="img-electromagnetic" alt="Electromagnetic spectrum" style="display:none">
+        </div>
+      </div>
+
+      <div class="spectrum-panel" id="panel-sound">
+        <div class="panel-header">
+          <span class="panel-icon">🔊</span>
+          <span class="panel-title">Sound Spectrum</span>
+          <span class="panel-badge" id="badge-sound">—</span>
+        </div>
+        <div class="panel-body">
+          <div class="panel-loader" id="loader-sound"><div class="loader-spinner"></div></div>
+          <img id="img-sound" alt="Sound spectrum" style="display:none">
+        </div>
+      </div>
+
+      <div class="spectrum-panel" id="panel-visual">
+        <div class="panel-header">
+          <span class="panel-icon">👁</span>
+          <span class="panel-title">Visual Spectrum</span>
+          <span class="panel-badge" id="badge-visual">—</span>
+        </div>
+        <div class="panel-body">
+          <div class="panel-loader" id="loader-visual"><div class="loader-spinner"></div></div>
+          <img id="img-visual" alt="Visual spectrum" style="display:none">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-brand">∿ WaveGen</span>
+      <span class="footer-copy">Built with Flask · NumPy · Matplotlib</span>
+      <div class="footer-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('dynamic') }}">Dynamic</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/static.js') }}"></script>
+</body>
+</html>

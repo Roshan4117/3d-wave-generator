@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Wave Generator — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="{{ url_for('index') }}" class="nav-brand">∿ WaveGen</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+      <li><a href="{{ url_for('dynamic') }}">Dynamic</a></li>
+      <li><a href="{{ url_for('static_spectrums') }}">Static</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">3D WAVE GENERATOR</div>
+      <h1 class="hero-title">Visualize <em>wave</em><br>spectrums in 3D</h1>
+      <p class="hero-sub">
+        Explore electromagnetic, sound, and visual spectrums rendered as
+        interactive 3D surfaces. Set custom frequencies and amplitudes,
+        powered by NumPy and Matplotlib.
+      </p>
+      <div class="hero-cta">
+        <a href="{{ url_for('dynamic') }}" class="btn btn-primary">Launch Dynamic →</a>
+        <a href="{{ url_for('static_spectrums') }}" class="btn btn-ghost">View Static</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="hero-card-title">Electromagnetic — f=2.0 Hz</span>
+        </div>
+        <div class="hero-img-wrap">
+          <div class="hero-skeleton" id="heroSkeleton">
+            <div class="skeleton-wave"></div>
+            <span>Rendering wave…</span>
+          </div>
+          <img id="heroImg" alt="Electromagnetic wave" style="display:none">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="section-header">
+      <div class="section-tag">WHAT'S INSIDE</div>
+      <h2>Two modes, three spectrums</h2>
+    </div>
+    <div class="features-grid">
+      <a href="{{ url_for('dynamic') }}" class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Dynamic Mode</h3>
+        <p>Real-time 3D wave generation. Dial in frequency, amplitude, and resolution — the server renders a fresh surface plot on every request.</p>
+        <span class="feature-link">Open Dynamic →</span>
+      </a>
+      <a href="{{ url_for('static_spectrums') }}" class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Static Mode</h3>
+        <p>Browse 8 planets with pre-configured wave frequencies. Each planet renders all three spectrum types simultaneously.</p>
+        <span class="feature-link">Open Static →</span>
+      </a>
+      <div class="feature-card feature-card--plain">
+        <div class="feature-icon">📐</div>
+        <h3>Three Spectrums</h3>
+        <p>Electromagnetic (sin), Sound (cos), and Visual (sin·cos) — each with a distinct wave equation and colormap.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-tag">HOW IT WORKS</div>
+        <h2>Flask + NumPy + Matplotlib</h2>
+        <p>Each time you request a wave, the Flask backend computes a meshgrid with NumPy, evaluates the wave equation, and renders a 3D surface plot with Matplotlib — then streams it back as a base64 PNG. No static images are stored.</p>
+        <p>The REST API is fully accessible: <code>POST /api/wave</code> accepts JSON and returns the rendered plot plus metadata.</p>
+      </div>
+      <div class="eq-stack">
+        <div class="eq-card">
+          <div class="eq-badge eq-badge--em">Electromagnetic</div>
+          <div class="eq-formula">Z = A · sin(f · (X + Y))</div>
+          <div class="eq-desc">Plasma colormap · default f = 1.5</div>
+        </div>
+        <div class="eq-card">
+          <div class="eq-badge eq-badge--sound">Sound</div>
+          <div class="eq-formula">Z = A · cos(f · (X + Y))</div>
+          <div class="eq-desc">Viridis colormap · default f = 2.0</div>
+        </div>
+        <div class="eq-card">
+          <div class="eq-badge eq-badge--visual">Visual</div>
+          <div class="eq-formula">Z = A · sin(f·X) · cos(f·Y)</div>
+          <div class="eq-desc">Inferno colormap · default f = 2.5</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-brand">∿ WaveGen</span>
+      <span class="footer-copy">Built with Flask · NumPy · Matplotlib</span>
+      <div class="footer-links">
+        <a href="{{ url_for('dynamic') }}">Dynamic</a>
+        <a href="{{ url_for('static_spectrums') }}">Static</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    fetch('/api/wave', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ spectrum: 'electromagnetic', frequency: 2.0, amplitude: 1.0, resolution: 55 })
+    })
+    .then(r => r.json())
+    .then(data => {
+      const img = document.getElementById('heroImg');
+      const sk  = document.getElementById('heroSkeleton');
+      img.src = 'data:image/png;base64,' + data.image;
+      img.onload = () => { sk.style.display = 'none'; img.style.display = 'block'; };
+    })
+    .catch(() => {
+      document.getElementById('heroSkeleton').innerHTML = '<span style="color:#6b7090">Could not load preview</span>';
+    });
+  </script>
+</body>
+</html>
