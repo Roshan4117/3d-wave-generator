@@ -61,7 +61,7 @@ cd 3d-wave-generator
 
 ```bash
 python -m venv venv
-source venv/bin/activate        # macOS / Linux
+source venv/bin/activate        # macOS 
 venv\Scripts\activate           # Windows
 ```
 
@@ -138,18 +138,6 @@ Returns pre-rendered wave plots for all three spectrum types at planet-specific 
 
 ---
 
-## Deployment
-
-For production, use **Gunicorn**:
-
-```bash
-pip install gunicorn
-gunicorn -w 2 -b 0.0.0.0:5000 app:app
-```
-
-Or deploy to **Railway**, **Render**, or **Fly.io** — all support Python/Flask out of the box.
-
----
 
 ## License
 
